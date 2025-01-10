@@ -1,10 +1,12 @@
-import LoginForm from "../forms/LoginForm";
+import LoginForm from '../forms/LoginForm';
 
 function page() {
   return (
-    <div>
-      <LoginForm />
-    </div>
+    <main className='px-[10px]'>
+      <div className='mx-auto max-w-[600px] p-[10px] mt-[50px] shadow-bsh33 rounded-lg'>
+        <LoginForm />
+      </div>
+    </main>
   );
 }
 

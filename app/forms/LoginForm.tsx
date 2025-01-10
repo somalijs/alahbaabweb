@@ -1,31 +1,37 @@
-"use client";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-
-type userSchema = {
-  phone: {
-    number: string;
-    dialCode: string;
-  };
-  password: string;
-};
+'use client';
+import { UserLoginSchema } from '@/lib/types/auth';
+import { singInValidation } from '@/lib/validations/auth';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import PhoneInput from '@/components/shared/PhoneInput';
+import { Button } from '@/components/ui/button';
 function LoginForm() {
-  const User = z.object({
-    phone: z.object({
-      number: z.string().min(1, { message: "Phone number is required" }),
-      dialCode: z.string(),
-    }),
-    password: z.string().min(1, { message: "Password is required" }),
-  });
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<userSchema>({
-    resolver: zodResolver(User),
+    watch,
+    clearErrors,
+    setValue,
+  } = useForm<UserLoginSchema>({
+    resolver: zodResolver(singInValidation),
   });
-  return <div>SignInForm</div>;
+  const onSubmit = async (datas: UserLoginSchema): Promise<void> => {
+    console.log('Form submitted', datas); // Debug output
+  };
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
+      <PhoneInput
+        setValue={setValue}
+        clearErrors={clearErrors}
+        name='phone'
+        label='phone'
+        error={errors.phone}
+        placeholder='Enter phone number'
+      />
+      <button type='submit'>Submit</button>
+    </form>
+  );
 }
 
 export default LoginForm;
