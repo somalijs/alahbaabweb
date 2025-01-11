@@ -26,9 +26,10 @@ function PhoneInput({
     const phoneNumber = value?.replace(dialCode || "", "")?.trim();
     // Set the values in the form
     setValue(`${name}.dialCode`, formattedDialCode); // Update dialCode field
-    setValue(`${name}.phone`, phoneNumber); // Update phone field
+    setValue(`${name}.number`, phoneNumber); // Update phone field
     clearErrors("phone");
   };
+
   return (
     <main className="flex-1">
       <div>
@@ -40,15 +41,23 @@ function PhoneInput({
         </label>
         <PhoneInputComponent
           placeholder={placeholder}
-          containerClass="w-full  h-[40px] rounded-xl px-2"
-          inputClass=" h-full"
-          inputStyle={{ width: "100%", height: "100%" }}
+          containerClass="w-full  h-[42px] rounded-xl ant-input css-dev-only-do-not-override-7ny38l ant-input-outlined  boder-[1px] border-gray-300 "
+          inputStyle={{
+            width: "100%",
+            height: "100%",
+          }}
+          buttonClass="rounded-2xl"
+          containerStyle={{
+            padding: "0px",
+            paddingLeft: "1px",
+          }}
           onChange={onPhoneChange} // Handle changes
         />
       </div>
       {error && (
         <span className="mt-2 text-xs text-red-500">
-          {error.message || "This field is required"}
+          {error?.dialCode?.message}
+          {error?.dialCode ? "," : ""} {error?.number?.message}
         </span>
       )}
     </main>

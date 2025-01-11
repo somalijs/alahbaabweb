@@ -70,3 +70,13 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.react-tel-input .form-control {
+  border: none !important;
+}
+.react-tel-input .flag-dropdown {
+  border: none !important;
+}
+.react-tel-input .flag-dropdown:hover {
+  background-color: #f5f5f5 !important;
+}
