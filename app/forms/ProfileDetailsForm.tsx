@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { useState } from 'react';
-import { z } from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { z } from "zod";
 
-import { Form } from '@/components/ui/form';
+import { Form } from "@/components/ui/form";
 
-import { profileDetailsValidation } from '@/lib/validations/auth';
-import { useAuth, useSetAuth } from '@/context/Bint';
-import SelectField from '@/components/shared/SelectField';
-import SearchableSelect from '@/components/shared/SearchableSelect';
-import InputField from '@/components/shared/Inputs';
-import { countriesOptions } from '@/lib/shorts';
-import { toast } from '@/hooks/use-toast';
-import useFetchHook from '@/hooks/useFetchHook';
+import { profileDetailsValidation } from "@/lib/validations/auth";
+import { useAuth, useSetAuth } from "@/context/Bint";
+import SelectField from "@/components/shared/SelectField";
+import SearchableSelect from "@/components/shared/SearchableSelect";
+import InputField from "@/components/shared/Inputs";
+import { countriesOptions } from "@/lib/shorts";
+import { toast } from "@/hooks/use-toast";
+import useFetchHook from "@/hooks/useFetchHook";
 
 type profileDetailsState = {
   _id: string;
@@ -29,9 +29,11 @@ type profileDetailsState = {
 function ProfileDetailsForm({
   edit,
   setEdit,
+  editPhone,
 }: {
   edit: boolean;
   setEdit: React.Dispatch<React.SetStateAction<boolean>>;
+  editPhone: boolean;
 }) {
   const auth = useAuth();
 
@@ -62,9 +64,9 @@ function ProfileDetailsForm({
 
     if (isUnchanged) {
       toast({
-        variant: 'destructive',
-        title: 'No changes detected',
-        description: 'No changes were made to the profile details.',
+        variant: "destructive",
+        title: "No changes detected",
+        description: "No changes were made to the profile details.",
         duration: 3000,
       });
       return;
@@ -78,20 +80,20 @@ function ProfileDetailsForm({
           gender: data.gender,
           nationality: data.country,
         },
-        method: 'PUT',
+        method: "PUT",
         v: 2,
       });
 
       if (!res.ok) {
         toast({
-          variant: 'destructive',
-          description: res?.message || 'Something went wrong',
+          variant: "destructive",
+          description: res?.message || "Something went wrong",
           duration: 3000,
         });
         return;
       }
       toast({
-        description: 'Profile details updated successfully',
+        description: "Profile details updated successfully",
         duration: 3000,
       });
       setAuth({
@@ -107,30 +109,39 @@ function ProfileDetailsForm({
       setEdit(false);
     } catch (error: any) {
       toast({
-        variant: 'destructive',
-        description: error?.message || 'Something went wrong',
+        variant: "destructive",
+        description: error?.message || "Something went wrong",
         duration: 3000,
       });
     }
   }
 
-  // Clear the root error once any field changes
+  // editPhone
+  useEffect(() => {
+    if (editPhone) {
+      setValue("name", name);
+      setValue("surname", surname);
+      setValue("country", country);
+      setValue("gender", gender);
+      setEdit(false);
+    }
+  }, [editPhone]);
 
   return (
-    <div className='relative'>
+    <div className="relative">
       {!edit ? (
         <button
-          type='button'
+          type="button"
           onClick={() => setEdit(true)}
-          className='absolute right-[20px] -top-[15px]  cursor-pointer bg-orange-500 text-white hover:bg-orange-300 border-input border px-3 py-1 rounded-lg '
+          className="absolute right-[20px] -top-[15px]  cursor-pointer bg-orange-500 text-white hover:bg-orange-300 border-input border px-3 py-1 rounded-lg "
         >
           Edit
         </button>
       ) : (
         <button
-          type='button'
+          type="button"
           onClick={() => setEdit(false)}
-          className='absolute right-[100px] -top-[35px] cursor-pointer bg-red-500 text-white hover:bg-red-300 border-input border px-3 py-1 rounded-lg '
+          className="absolute right-[100px] -top-[35px] cursor-pointer bg-red-500 text-white hover:bg-red-300 border-input border px-3 py-1 rounded-lg "
         >
           cancel
         </button>
@@ -138,61 +149,61 @@ function ProfileDetailsForm({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className='px-[20px] space-y-4 pb-[20px]'
+          className="px-[20px] space-y-4 pb-[20px]"
         >
           {edit && (
             <button
-              type='submit'
-              className='absolute right-[20px] -top-[35px]  cursor-pointer bg-sky-600 text-white hover:bg-sky-300 border-input border px-3 py-1 rounded-lg '
+              type="submit"
+              className="absolute right-[20px] -top-[35px]  cursor-pointer bg-sky-600 text-white hover:bg-sky-300 border-input border px-3 py-1 rounded-lg "
             >
               update
             </button>
           )}
 
-          <section className='grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-5'>
+          <section className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-5">
             <InputField
               control={form.control}
-              name='name'
-              label='name'
-              placeholder='Enter your name'
+              name="name"
+              label="name"
+              placeholder="Enter your name"
               disabled={!edit || isLoading}
             />
             <InputField
               control={form.control}
-              name='surname'
-              label='Surname'
-              placeholder='Enter your surname'
+              name="surname"
+              label="Surname"
+              placeholder="Enter your surname"
               disabled={!edit || isLoading}
             />
           </section>
-          <section className='grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-5'>
+          <section className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-5">
             <SelectField
               control={form.control}
-              name='gender'
-              label='Select Gender'
-              placeholder='Choose your gender'
+              name="gender"
+              label="Select Gender"
+              placeholder="Choose your gender"
               options={[
-                { value: 'male', label: 'Male' },
-                { value: 'female', label: 'Female' },
+                { value: "male", label: "Male" },
+                { value: "female", label: "Female" },
               ]}
               disabled={!edit || isLoading}
             />
             <SearchableSelect
               control={form.control}
-              name='country'
-              label='Select country'
-              placeholder='Choose your country'
+              name="country"
+              label="Select country"
+              placeholder="Choose your country"
               options={countriesOptions}
               disabled={!edit || isLoading}
             />
           </section>
-          <p className='text-red-500'>{errors.root?.message}</p>
+          <p className="text-red-500">{errors.root?.message}</p>
         </form>
       </Form>
     </div>
   );
 }
 
-const genders = ['Male', 'Female', 'Other'];
+const genders = ["Male", "Female", "Other"];
 
 export default ProfileDetailsForm;

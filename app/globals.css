@@ -80,3 +80,6 @@ body {
 .react-tel-input .flag-dropdown:hover {
   background-color: #f5f5f5 !important;
 }
+.ant-input-disabled {
+  color: black !important;
+}

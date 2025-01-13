@@ -1,20 +1,20 @@
-'use client';
+"use client";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { useState } from 'react';
+} from "@/components/ui/form";
+import { useState } from "react";
 
 interface SelectFieldOption {
   label: string;
@@ -73,7 +73,7 @@ const SearchableInput = ({
   field,
   disabled,
 }: SearchableSelectProps) => {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
 
   const filteredOptions = options.filter((option) =>
     option.label.toLowerCase().includes(search.toLowerCase())
@@ -83,18 +83,18 @@ const SearchableInput = ({
     <Select
       disabled={disabled}
       onValueChange={field.onChange}
-      defaultValue={field.value || ''}
+      defaultValue={field.value || ""}
     >
-      <SelectTrigger className='w-full'>
+      <SelectTrigger className="w-full disabled:text-black disabled:opacity-1">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
-        <div className='p-2'>
+        <div className="p-2">
           <Input
             placeholder={placeholder}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className='mb-2'
+            className="mb-2"
           />
         </div>
         {filteredOptions.length > 0 ? (
@@ -104,7 +104,7 @@ const SearchableInput = ({
             </SelectItem>
           ))
         ) : (
-          <div className='p-2 text-sm text-gray-500'>No results found</div>
+          <div className="p-2 text-sm text-gray-500">No results found</div>
         )}
       </SelectContent>
     </Select>

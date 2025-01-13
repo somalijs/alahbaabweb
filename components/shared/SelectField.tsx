@@ -1,18 +1,18 @@
-'use client';
+"use client";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
+} from "@/components/ui/form";
 
 interface SelectFieldOption {
   label: string;
@@ -46,10 +46,10 @@ const SelectField: React.FC<SelectFieldProps> = ({
           <FormControl>
             <Select
               onValueChange={field.onChange}
-              defaultValue={field.value || ''}
+              defaultValue={field.value || ""}
               disabled={disabled}
             >
-              <SelectTrigger className='w-full'>
+              <SelectTrigger className="w-full disabled:text-black disabled:opacity-1">
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
               <SelectContent>

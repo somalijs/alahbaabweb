@@ -1,19 +1,19 @@
-'use client';
+"use client";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 interface SelectFieldProps {
   control: any;
   name: string;
@@ -40,8 +40,9 @@ const InputField: React.FC<SelectFieldProps> = ({
             <Input
               placeholder={placeholder}
               {...field}
-              value={field.value || ''}
+              value={field.value || ""}
               disabled={disabled}
+              className="disabled:text-black disabled:opacity-1"
             />
           </FormControl>
           <FormMessage />

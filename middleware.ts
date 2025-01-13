@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import Auth from "./lib/auth/Auth";
 
 export async function middleware(request: NextRequest) {
-  const auth = await Auth();  // Assuming Auth() returns an object with isLoggedIn property
+  const auth = await Auth(); // Assuming Auth() returns an object with isLoggedIn property
   const url = request.url;
 
   // If the user is not logged in, redirect to login page
@@ -17,8 +17,8 @@ export async function middleware(request: NextRequest) {
     if (url.includes("/login")) {
       return NextResponse.redirect(new URL("/profile", url));
     }
-  
-      return NextResponse.next(); 
+
+    return NextResponse.next();
   }
 
   // Continue with the request if no redirection is needed
@@ -27,5 +27,5 @@ export async function middleware(request: NextRequest) {
 
 // Config to match specific paths
 export const config = {
-  matcher: ["/profile", "/login"],  // Match both profile and login routes
+  matcher: ["/profile", "/login"], // Match both profile and login routes
 };
